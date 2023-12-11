@@ -1,10 +1,15 @@
 <template>
     <div class="product-card">
         <img src="/img/products/rdr2.jpg" alt="rdr2">
-        <div class="product-card__name">Red Dead Redemption 2</div>
-        <div class="product-card__cost">2499 ₽</div>
+        <div class="product-card__name">{{ product.name }}</div>
+        <div class="product-card__cost">{{ product.cost }}</div>
     </div>
+    <!-- {{ product }} -->
 </template>
+
+<script setup>
+const { product } = defineProps(['product'])
+</script>
 
 <style lang="scss">
 .product-card {

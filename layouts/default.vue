@@ -4,7 +4,7 @@
             <header class="header">
                 <div class="header__logo">Logo will be here</div>
                 <div class="header__navbar">
-                    <router-link to="/">
+                    <router-link to="/fortnight">
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect fill="url(#pattern0)"/>
                             <defs>
@@ -125,7 +125,7 @@ footer {
     // left: 0;
     // bottom: 0;
     width: 100%;
-    height: 200px;
+    height: 500px;
     background: $colorBlack;
 }
 </style>
