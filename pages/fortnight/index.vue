@@ -36,14 +36,7 @@ const fortnightProducts = [
 ];
 </script>
 
-<style lang="scss">
-    .title {
-        margin: 60px 0 30px;
-        text-align: center;
-        font-size: 55px;
-        font-weight: 600;
-    }
-
+<style lang="scss" scoped>
     .asdfgh {
         display: flex;
 

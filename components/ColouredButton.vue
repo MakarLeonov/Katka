@@ -18,6 +18,7 @@
     color: #fff;
     line-height: 1;
     font-size: 18px;
+    text-align: center;
     cursor: pointer;
 
     transition: background 0.25s $easeInOutCirc,
@@ -27,5 +28,10 @@
         background: transparent;
         color: $colorBlack;
     }
+
+    -ms-user-select: none; 
+    -moz-user-select: none; 
+    -webkit-user-select: none; 
+    user-select: none; 
 }
 </style>

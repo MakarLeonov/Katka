@@ -4,7 +4,7 @@
             <header class="header">
                 <div class="header__logo">Logo will be here</div>
                 <div class="header__navbar">
-                    <router-link to="/fortnight">
+                    <NuxtLink to="/fortnight">
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect fill="url(#pattern0)"/>
                             <defs>
@@ -15,8 +15,8 @@
                             </defs>
                         </svg>
                         <p>Fortnight</p>
-                    </router-link>
-                    <router-link to="/xbox">
+                    </NuxtLink>
+                    <NuxtLink to="/xbox">
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect fill="url(#pattern0)"/>
                             <defs>
@@ -27,8 +27,8 @@
                             </defs>
                         </svg>
                         <p>Xbox</p>
-                    </router-link>
-                    <router-link to="/playstation">
+                    </NuxtLink>
+                    <NuxtLink to="/playstation">
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect fill="url(#pattern1)"/>
                             <defs>
@@ -39,8 +39,8 @@
                             </defs>
                         </svg>
                         <p>PlayStation</p>
-                    </router-link>
-                    <router-link to="/pc">
+                    </NuxtLink>
+                    <NuxtLink to="/pc">
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect fill="url(#pattern2)"/>
                             <defs>
@@ -51,9 +51,11 @@
                             </defs>
                         </svg>
                         <p>PC</p>
-                    </router-link>
+                    </NuxtLink>
                 </div>
-                <div></div>
+                <div>
+                    <nuxt-link to="/korzina">korzina</nuxt-link>
+                </div>
             </header>
             <slot />
         </div>
