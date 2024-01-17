@@ -22,6 +22,7 @@
 
     display: flex;
     align-items: center;
+    text-align: center;
 
     transition: background 0.25s $easeInOutCirc,
                 color 0.25s $easeInOutCirc;

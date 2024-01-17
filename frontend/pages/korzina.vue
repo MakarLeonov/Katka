@@ -12,8 +12,11 @@
                             <div>499$</div>
                         </div>
                         <div class="korzina__product-list-card-info-body">
-                            <EmptyButton>Удалить из корзины</EmptyButton>
+                            <div class="korzina__product-list-card-info-body-text">alskjf</div>
                             <ProductCounter />
+                        </div>
+                        <div class="korzina__product-list-card-info-body">
+                            <EmptyButton>Удалить из корзины</EmptyButton>
                         </div>
                     </div>
                 </div>
