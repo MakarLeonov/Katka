@@ -49,8 +49,6 @@
                     <div class="product-card__body-requirements-cell">{{ fortnightProducts[0].requirements.min.ram }}</div>
                     <div class="product-card__body-requirements-cell">{{ fortnightProducts[0].requirements.recommended.ram }}</div>
                 </div> -->
-                <br>
-                info: {{ data.data }}
             </div>
         </div>
     </div>

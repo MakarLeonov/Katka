@@ -14,10 +14,22 @@
                         >
                             <div class="reviews-slider__slide">
                                 <div class="reviews-slider__slide-head">
-                                    <img src="/public/img/user_icons/man.png" alt="man">
+                                    <img v-if="slide.male === 'm'" src="/public/img/user_icons/man.png" alt="man">
+                                    <img v-else src="/public/img/user_icons/woman.png" alt="woman">
                                     <div>
                                         <div class="reviews-slider__slide-head-name">{{ slide.name }}</div>
-                                        <div class="reviews-slider__slide-head-stars">⭐⭐⭐⭐⭐</div>
+                                        <div class="reviews-slider__slide-head-stars">
+                                            <div v-for="(star, index) in slide.rating" :key="index">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
+                                                    <path d="M9 13.6626L14.562 17L13.086 10.71L18 6.47789L11.529 5.93211L9 0L6.471 5.93211L0 6.47789L4.914 10.71L3.438 17L9 13.6626Z" fill="#FFD600"/>
+                                                </svg>
+                                            </div>
+                                            <div v-for="(star, index) in 5 - slide.rating" :key="index">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
+                                                    <path d="M18 6.47789L11.529 5.92316L9 0L6.471 5.93211L0 6.47789L4.914 10.71L3.438 17L9 13.6626L14.562 17L13.095 10.71L18 6.47789ZM9 11.9895L5.616 14.0205L6.516 10.1911L3.528 7.61421L7.47 7.27421L9 3.66842L10.539 7.28316L14.481 7.62316L11.493 10.2L12.393 14.0295L9 11.9895Z" fill="#FFD600"/>
+                                                </svg>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <p class="reviews-slider__slide-comment">{{ slide.comment }}</p>
@@ -60,15 +72,15 @@ const requests = ref([
         id: 1,
         name: 'Игорь Катка!',
         male: 'm',
-        rating: '5',
-        comment: 'Игра обалденская, всё вообще супер, сайт тоже, программист от бога, я атеист',
+        rating: 5,
+        comment: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur bla....',
         date: '22.03.2023'
     },
     {
         id: 2,
         name: 'Виталий Катка!',
         male: 'm',
-        rating: '5',
+        rating: 3,
         comment: 'Игра обалденская, всё вообще супер, сайт тоже, программист от бога, я атеист',
         date: '22.03.2023'
     },
@@ -76,7 +88,7 @@ const requests = ref([
         id: 3,
         name: 'Настя Катка!',
         male: 'f',
-        rating: '5',
+        rating: 4,
         comment: 'Игра обалденская, всё вообще супер, сайт тоже, программист от бога, я атеист',
         date: '22.03.2023'
     },
@@ -84,7 +96,7 @@ const requests = ref([
         id: 4,
         name: 'Денис Катка!',
         male: 'm',
-        rating: '5',
+        rating: 0,
         comment: 'Игра обалденская, всё вообще супер, сайт тоже, программист от бога, я атеист',
         date: '22.03.2023'
     },
@@ -92,7 +104,7 @@ const requests = ref([
         id: 5,
         name: 'Глебоба Катка!',
         male: 'm',
-        rating: '5',
+        rating: 5,
         comment: 'Игра обалденская, всё вообще супер, сайт тоже, программист от бога, я атеист',
         date: '22.03.2023'
     },
@@ -194,7 +206,7 @@ padding: 0 60px;
         padding: 0 percent(40, 1440) 20px;
         font-size: 0;
         white-space: nowrap;
-        margin: 0 -20px -20px;
+        margin: 0 -20px -40px;
         overflow: auto hidden;
     }
 
@@ -215,19 +227,29 @@ padding: 0 60px;
     }
 
     &__slide {
-        padding: 24px 24px 20px;
+        padding: 24px 24px 16px;
         font-size: 16px;
-        border: 1px solid color-lighten($colorGray, 70%);
+        // border: 1px solid color-lighten($colorGray, 70%);
+        box-shadow: 0px 1px 15px 0px rgba(0, 0, 0, 0.15);
         border-radius: 24px;
+
+        @include mq(1023) {
+            box-shadow: none;
+        }
 
         @include mq(424) {
             padding: 20px percent(86, 1360);
+        }
+
+        &-list {
+            padding: 12px 0;
         }
     }
 
     &__slide-head{
         display: flex;
         align-items: center;
+        padding: 0 0 16px;
 
         img {
             width: 60px;
@@ -237,7 +259,16 @@ padding: 0 60px;
 
         &-name {
             color: $colorBlack;
-            font-size: 18px;
+            font-size: 19px;
+            margin: 0 0 4px;
+        }
+
+        &-stars {
+            display: flex;
+            
+            & > div {
+                margin: 0 3px 0 0;
+            }
         }
     }
 
@@ -259,25 +290,23 @@ padding: 0 60px;
     &__slide-comment {
         display: -webkit-box;
         font-weight: 500;
+        line-height: 1.4;
         color: $colorGray;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 4;
         overflow: hidden;
+        margin: 0 0 7px;
     }
 
-    &__slide-date,
-    &__slide-pay-type {
-        display: inline-block;
+    &__slide-date {
+        color: $colorGray;
         font-size: 12px;
-        font-weight: 500;
+        line-height: 17px;
+        text-align: right;
     }
 
     &__pins {
         text-align: center;
-
-        @include mq(1023) {
-            display: none;
-        }
 
         svg {
             display: block;
@@ -307,7 +336,8 @@ padding: 0 60px;
             }
 
             &:last-child {
-                margin: 0 0 0 coef(30, 1440) * 100vw;
+                // margin: 0 0 0 coef(30, 1440) * 100vw;
+                margin: 0 0 0 20px;
             }
         }
     }

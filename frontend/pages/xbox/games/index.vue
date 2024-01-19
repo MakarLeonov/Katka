@@ -19,27 +19,27 @@
 
                 <div class="xbox-games__filters-searching">
                     <div class="xbox-games__filters-searching-title">Искать игры:</div>
-                    <input v-model="searchingValue" type="text" placeholder="Введите название продукта...">
+                    <input v-model="searchingValue" @keyup.enter="getSearchedProducts" type="text" placeholder="Введите название продукта...">
                     <EmptyButton @click="getSearchedProducts">Искать {{ searchingValue }}</EmptyButton>
                 </div>
             </div>
 
-
-            <div v-if="searchingFilterOn" class="xbox-games__product-list">
-                <nuxt-link :to="`/xbox/games/${game.id}`" v-for="game in searchedProducts.data" :key="game.id" class="xbox-games__product-list-card">
-                    <ProductCard :game="game" />
-                </nuxt-link>
-
-                {{ searchedProducts }}
-
-                
-            </div>
-
-            <div v-else-if="allProducts" class="xbox-games__product-list">
+            <div v-if="allProducts" class="xbox-games__product-list">
                 <nuxt-link :to="`/xbox/games/${game.id}`" v-for="game in allProducts.data" :key="game.id" class="xbox-games__product-list-card">
                     <ProductCard :product="game" />
                 </nuxt-link>
             </div>
+
+            <div v-else>
+                no products
+            </div>
+
+
+            <!-- <div v-else-if="searchingFilterOn" class="xbox-games__product-list">
+                <nuxt-link :to="`/xbox/games/${game.id}`" v-for="game in searchedProducts" :key="game.id" class="xbox-games__product-list-card">
+                    <ProductCard :product="game" />
+                </nuxt-link>
+            </div> -->
         </div>
     </div>
 </template>
@@ -55,9 +55,9 @@ const searchingValue = ref('');
 const searchingFilterOn = ref(false)
 
 async function getSearchedProducts() {
-    // let { data: respons } = await useFetch(`http://127.0.0.1:8000/api/xbox/games/search/${searchingValue}`);
-    // searchedProducts.value = respons
-    // searchingFilterOn.value = true;
+    const { data: response } = await useFetch(`http://127.0.0.1:8000/api/xbox/games/search/${searchingValue.value}`);
+    searchedProducts.value = response.value.data
+    searchingFilterOn.value = true;
 }
 
 </script>
