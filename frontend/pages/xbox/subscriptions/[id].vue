@@ -31,9 +31,11 @@
 </template>
 
 <script setup>
+import url from '@/url.js'
+
 const { id } = useRoute().params;
 
-const { data } = await useFetch(`http://127.0.0.1:8000/api/xbox/subscriptions/${id}`);
+const { data } = await useFetch(`${url}/api/xbox/subscriptions/${id}`);
 
 </script>
 

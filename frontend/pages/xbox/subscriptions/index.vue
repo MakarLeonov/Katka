@@ -19,45 +19,71 @@
 
                 <div class="xbox-subscriptions__filters-searching">
                     <div class="xbox-subscriptions__filters-searching-title">Искать игры:</div>
-                    <input v-model="searchingValue" type="text" placeholder="Введите название продукта...">
+                    <input v-model="searchingValue" @keyup.enter="getSearchedProducts" type="text" placeholder="Введите название продукта...">
                     <EmptyButton @click="getSearchedProducts">Искать {{ searchingValue }}</EmptyButton>
                 </div>
             </div>
 
 
-            <div v-if="searchingFilterOn" class="xbox-subscriptions__product-list">
-                <nuxt-link :to="`/xbox/subscriptions/${subscription.id}`" v-for="subscription in searchedProducts.data" :key="subscription.id" class="xbox-subscriptions__product-list-card">
-                    <ProductCard :subscription="subscription" />
+            <!-- <div v-if="allProducts && !searchingFilterOn" class="xbox-subscriptions__product-list">
+                <nuxt-link :to="`/xbox/subscriptions/${product.id}`" v-for="product in searchedProducts.data" :key="product.id" class="xbox-subscriptions__product-list-card">
+                    <ProductCard :product="product" />
                 </nuxt-link>
-
-                {{ searchedProducts }}
-
-                
             </div>
 
-            <div v-else-if="allProducts" class="xbox-subscriptions__product-list">
-                <nuxt-link :to="`/xbox/subscriptions/${subscription.id}`" v-for="subscription in allProducts.data" :key="subscription.id" class="xbox-subscriptions__product-list-card">
-                    <ProductCard :product="subscription" />
+            <div v-else-if="searchedProducts && searchingFilterOn" class="xbox-subscriptions__product-list">
+                <nuxt-link :to="`/xbox/subscriptions/${product.id}`" v-for="product in allProducts.data" :key="product.id" class="xbox-subscriptions__product-list-card">
+                    <ProductCard :product="product" />
                 </nuxt-link>
+            </div>
+
+            <div v-else>
+                no products
+            </div> -->
+
+            <div v-if="allProducts && !searchingFilterOn" class="xbox-subscriptions__product-list">
+                <nuxt-link :to="`/xbox/subscriptions/${product.id}`" v-for="product in allProducts.data" :key="product.id" class="xbox-subscriptions__product-list-card">
+                    <ProductCard :product="product" />
+                </nuxt-link>
+            </div>
+
+            <div v-else-if="searchedProducts && searchingFilterOn" class="xbox-subscriptions__product-list">
+                <nuxt-link :to="`/xbox/subscriptions/${product.id}`" v-for="product in searchedProducts" :key="product.id" class="xbox-subscriptions__product-list-card">
+                    <ProductCard :product="product" />
+                </nuxt-link>
+            </div>
+
+            <div v-else>
+                no products
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-const { data: allProducts } = await useFetch('http://127.0.0.1:8000/api/xbox/subscriptions')
+import url from '@/url.js'
 
-
-
+const { data: allProducts } = await useFetch(`${url}/api/xbox/subscriptions`)
 
 const searchedProducts = ref({});
 const searchingValue = ref('');
 const searchingFilterOn = ref(false)
 
+watch(searchingValue, () => {
+    if (searchingValue.value === '') {
+        searchingFilterOn.value = false;
+    }
+})
+
 async function getSearchedProducts() {
-    // let { data: respons } = await useFetch(`http://127.0.0.1:8000/api/xbox/subscriptions/search/${searchingValue}`);
-    // searchedProducts.value = respons
-    // searchingFilterOn.value = true;
+    const { data: response } = await useFetch(`${url}/api/xbox/subscriptions/search/${searchingValue.value}`);
+    searchingFilterOn.value = true;
+    if (response.value.data.length >= 1) {
+        searchedProducts.value = response.value.data
+    } else {
+        searchedProducts.value = false;
+    }
+    
 }
 
 </script>

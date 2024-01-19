@@ -24,40 +24,49 @@
                 </div>
             </div>
 
-            <div v-if="allProducts" class="xbox-games__product-list">
-                <nuxt-link :to="`/xbox/games/${game.id}`" v-for="game in allProducts.data" :key="game.id" class="xbox-games__product-list-card">
-                    <ProductCard :product="game" />
+            <div v-if="allProducts && !searchingFilterOn" class="xbox-games__product-list">
+                <nuxt-link :to="`/xbox/games/${product.id}`" v-for="product in allProducts.data" :key="product.id" class="xbox-games__product-list-card">
+                    <ProductCard :product="product" />
+                </nuxt-link>
+            </div>
+
+            <div v-else-if="searchedProducts && searchingFilterOn" class="xbox-games__product-list">
+                <nuxt-link :to="`/xbox/games/${product.id}`" v-for="product in searchedProducts" :key="product.id" class="xbox-games__product-list-card">
+                    <ProductCard :product="product" />
                 </nuxt-link>
             </div>
 
             <div v-else>
                 no products
             </div>
-
-
-            <!-- <div v-else-if="searchingFilterOn" class="xbox-games__product-list">
-                <nuxt-link :to="`/xbox/games/${game.id}`" v-for="game in searchedProducts" :key="game.id" class="xbox-games__product-list-card">
-                    <ProductCard :product="game" />
-                </nuxt-link>
-            </div> -->
         </div>
     </div>
 </template>
 
 <script setup>
-const { data: allProducts } = await useFetch('http://127.0.0.1:8000/api/xbox/games')
+import url from '@/url.js'
 
-
-
+const { data: allProducts } = await useFetch(`${url}/api/xbox/games`)
 
 const searchedProducts = ref({});
 const searchingValue = ref('');
 const searchingFilterOn = ref(false)
 
+watch(searchingValue, () => {
+    if (searchingValue.value === '') {
+        searchingFilterOn.value = false;
+    }
+})
+
 async function getSearchedProducts() {
-    const { data: response } = await useFetch(`http://127.0.0.1:8000/api/xbox/games/search/${searchingValue.value}`);
-    searchedProducts.value = response.value.data
+    const { data: response } = await useFetch(`${url}/api/xbox/games/search/${searchingValue.value}`);
     searchingFilterOn.value = true;
+    if (response.value.data.length >= 1) {
+        searchedProducts.value = response.value.data
+    } else {
+        searchedProducts.value = false;
+    }
+    
 }
 
 </script>

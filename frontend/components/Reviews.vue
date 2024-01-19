@@ -14,8 +14,8 @@
                         >
                             <div class="reviews-slider__slide">
                                 <div class="reviews-slider__slide-head">
-                                    <img v-if="slide.male === 'm'" src="/public/img/user_icons/man.png" alt="man">
-                                    <img v-else src="/public/img/user_icons/woman.png" alt="woman">
+                                    <img v-if="slide.male === 'm'" src="/img/user_icons/man.png" alt="man">
+                                    <img v-else src="/img/user_icons/woman.png" alt="woman">
                                     <div>
                                         <div class="reviews-slider__slide-head-name">{{ slide.name }}</div>
                                         <div class="reviews-slider__slide-head-stars">
