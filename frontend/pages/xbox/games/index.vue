@@ -44,9 +44,11 @@
 </template>
 
 <script setup>
-import url from '@/url.js'
+// import url from '@/url.js'
 
-const { data: allProducts } = await useFetch(`${url}/api/xbox/games`)
+// const url = useDefineURL()
+
+const { data: allProducts } = await useFetch(`${useDefineURL()}/api/xbox/games`)
 
 const searchedProducts = ref({});
 const searchingValue = ref('');

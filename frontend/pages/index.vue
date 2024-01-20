@@ -1,7 +1,5 @@
 <template>
     <div>
-        main page
-
         <Reviews />
     </div>
 </template>

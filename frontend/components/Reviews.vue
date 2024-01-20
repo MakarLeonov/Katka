@@ -7,24 +7,25 @@
                 <div ref="wrapperNode" class="reviews-slider__wrapper">
                     <div ref="slideListNode" class="reviews-slider__slide-list">
                         <div
-                            v-for="slide in requests"
-                            :key="slide.id"
+                            v-if="allReviews"
+                            v-for="review in allReviews.data"
+                            :key="review.id"
                             ref="slideItems"
                             class="reviews-slider__slide-wrapper"
                         >
                             <div class="reviews-slider__slide">
                                 <div class="reviews-slider__slide-head">
-                                    <img v-if="slide.male === 'm'" src="/img/user_icons/man.png" alt="man">
+                                    <img v-if="review.male === 'male'" src="/img/user_icons/man.png" alt="man">
                                     <img v-else src="/img/user_icons/woman.png" alt="woman">
                                     <div>
-                                        <div class="reviews-slider__slide-head-name">{{ slide.name }}</div>
+                                        <div class="reviews-slider__slide-head-name">{{ review.author }}</div>
                                         <div class="reviews-slider__slide-head-stars">
-                                            <div v-for="(star, index) in slide.rating" :key="index">
+                                            <div v-for="(star, index) in review.rating" :key="index">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
                                                     <path d="M9 13.6626L14.562 17L13.086 10.71L18 6.47789L11.529 5.93211L9 0L6.471 5.93211L0 6.47789L4.914 10.71L3.438 17L9 13.6626Z" fill="#FFD600"/>
                                                 </svg>
                                             </div>
-                                            <div v-for="(star, index) in 5 - slide.rating" :key="index">
+                                            <div v-for="(star, index) in 5 - review.rating" :key="index">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
                                                     <path d="M18 6.47789L11.529 5.92316L9 0L6.471 5.93211L0 6.47789L4.914 10.71L3.438 17L9 13.6626L14.562 17L13.095 10.71L18 6.47789ZM9 11.9895L5.616 14.0205L6.516 10.1911L3.528 7.61421L7.47 7.27421L9 3.66842L10.539 7.28316L14.481 7.62316L11.493 10.2L12.393 14.0295L9 11.9895Z" fill="#FFD600"/>
                                                 </svg>
@@ -32,8 +33,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <p class="reviews-slider__slide-comment">{{ slide.comment }}</p>
-                                <p class="reviews-slider__slide-date">{{ slide.date }}</p>
+                                <p class="reviews-slider__slide-comment">{{ review.comment }}</p>
+                                <p class="reviews-slider__slide-date">{{ useFromatDate(review.created_at) }}</p>
                             </div>
                         </div>
                     </div>
@@ -57,6 +58,21 @@
 </template>
 
 <script setup lang="ts">
+import url from '@/url.js'
+
+interface Reviews {
+    data: {
+        id: number,
+        author: string,
+        rating: number,
+        male: string,
+        comment: string,
+        created_at: string,
+    }[]
+}
+
+const { data: allReviews } = await useFetch<Reviews>(`${url}/api/reviews`)
+
 import { useWindowSize, executeTransition, TransitionPresets } from '@vueuse/core';
 
 const { width: windowWidth } = useWindowSize();
@@ -66,49 +82,6 @@ const slideItems = ref<HTMLDivElement[]>();
 const currentPage = ref(0);
 const wrapperNode = ref<HTMLDivElement>();
 const newPosition = ref(0);
-
-const requests = ref([
-    {
-        id: 1,
-        name: 'Игорь Катка!',
-        male: 'm',
-        rating: 5,
-        comment: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur bla....',
-        date: '22.03.2023'
-    },
-    {
-        id: 2,
-        name: 'Виталий Катка!',
-        male: 'm',
-        rating: 3,
-        comment: 'Игра обалденская, всё вообще супер, сайт тоже, программист от бога, я атеист',
-        date: '22.03.2023'
-    },
-    {
-        id: 3,
-        name: 'Настя Катка!',
-        male: 'f',
-        rating: 4,
-        comment: 'Игра обалденская, всё вообще супер, сайт тоже, программист от бога, я атеист',
-        date: '22.03.2023'
-    },
-    {
-        id: 4,
-        name: 'Денис Катка!',
-        male: 'm',
-        rating: 0,
-        comment: 'Игра обалденская, всё вообще супер, сайт тоже, программист от бога, я атеист',
-        date: '22.03.2023'
-    },
-    {
-        id: 5,
-        name: 'Глебоба Катка!',
-        male: 'm',
-        rating: 5,
-        comment: 'Игра обалденская, всё вообще супер, сайт тоже, программист от бога, я атеист',
-        date: '22.03.2023'
-    },
-]);
 
 const visibleCountOfSlides = computed(() => {
     if (windowWidth.value >= 1024) {
