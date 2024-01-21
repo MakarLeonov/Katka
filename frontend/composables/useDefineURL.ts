@@ -4,5 +4,5 @@ export const useDefineURL = () => {
     // console.log('url: ', url);
     
     // return url
-    return (process.env.NODE_ENV === 'development') ? 'http://127.0.0.1:8000' : 'https://api.katkamarket.com';
+    return (process.env.NODE_ENV === 'development') ? 'http://127.0.0.1:8000' : 'https://82.97.240.231.com';
 }
