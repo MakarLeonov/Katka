@@ -1,8 +1,8 @@
 module.exports = {
     apps: [
       {
-        name: 'katka-nuxt',
-        port: '3000',
+        name: 'katkamarket.com',
+        port: '80',
         exec_mode: 'cluster',
         instances: 'max',
         script: './.output/server/index.mjs'
