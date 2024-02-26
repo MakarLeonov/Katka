@@ -35,7 +35,8 @@ const { product } = defineProps(['product']);
     }
 
     &__name {
-        font-size: 17px;
+        font-size: 18px;
+        padding: 0 0 5px;
     }
 
     &__cost {

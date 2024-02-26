@@ -17,6 +17,7 @@ class XboxSubscriptionResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'genre' => $this->genre,
             'image' => $this->image,
             'price' => $this->price,
             'description' => $this->description,

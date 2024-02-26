@@ -1,6 +1,7 @@
 <template>
-    <div>
-        <Reviews />
+    <div class="wrapper">
+        <div class="title">Katka Market</div>
+        <!-- <Reviews /> -->
     </div>
 </template>
 

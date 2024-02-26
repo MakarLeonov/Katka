@@ -18,7 +18,7 @@
     "vue-router": "^4.2.5"
   },
   "dependencies": {
-    "@vee-validate/rules": "^4.11.3",
+    "@vee-validate/rules": "^4.12.5",
     "@vueuse/core": "^10.7.0",
     "@vueuse/nuxt": "^10.7.0",
     "vee-validate": "^4.12.3"

@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@vee-validate/nuxt": "^4.12.5",
+    "@vee-validate/rules": "^4.12.5"
+  }
+}

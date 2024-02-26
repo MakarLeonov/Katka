@@ -2,21 +2,22 @@
     <div class="wrapper">
         <p class="title">Корзина</p>
 
-        <div v-if="true" class="korzina">
+        <div v-if="products != null && products.length != 0" class="korzina">
             <div class="korzina__product-list">
-                <div class="korzina__product-list-card" v-for="(item, inex) in 5" :key="index">
-                    <img src="/img/products/rdr2.jpg" alt="rdr2">
+                <div v-for="product in products" :key="product.id" class="korzina__product-list-card">
+                    <img :src="product.image" :alt="product.name">
                     <div class="korzina__product-list-card-info">
                         <div class="korzina__product-list-card-info-head">
-                            <div>Red Dead Redemption 2</div>
-                            <div>499$</div>
+                            <div> {{ product.name }}</div>
+                            <div>{{ product.price }}$</div>
                         </div>
                         <div class="korzina__product-list-card-info-body">
-                            <div class="korzina__product-list-card-info-body-text">alskjf</div>
-                            <ProductCounter />
+                            <div v-if="product.author" class="korzina__product-list-card-info-body-author">{{ product.author }} · {{ product.genre }}</div>
+                            <!-- <div v-else class="korzina__product-list-card-info-body-author">{{ product.genre }}</div> -->
+                            <!-- <ProductCounter v-if="product.author" :count="product.amount" /> -->
                         </div>
                         <div class="korzina__product-list-card-info-body">
-                            <EmptyButton>Удалить из корзины</EmptyButton>
+                            <EmptyButton @click="useSetLocalstorage(product), deleteProduct(product)">Удалить из корзины</EmptyButton>
                         </div>
                     </div>
                 </div>
@@ -27,31 +28,21 @@
 
                 <div class="korzina__details-total-products">
                     <div>Всего продуктов:</div>
-                    <div>5 шт</div>
+                    <div>{{ products.length }} шт</div>
                 </div>
 
                 <div class="korzina__details-product-list">
-                    <div class="korzina__details-product-list-item">
-                        <div>- Red Dead Redemption 2 (2)</div>
-                        <div>499$</div>
-                    </div>
-                    <div class="korzina__details-product-list-item">
-                        <div>- Red Dead Redemption 2 (2)</div>
-                        <div>499$</div>
-                    </div>
-                    <div class="korzina__details-product-list-item">
-                        <div>- Red Dead Redemption 2 (2)</div>
-                        <div>499$</div>
-                    </div>
-                    <div class="korzina__details-product-list-item">
-                        <div>- Red Dead Redemption 2 (2)</div>
-                        <div>499$</div>
+                    <div v-for="product in products" :key="product.id" class="korzina__details-product-list-item">
+                        <div>- {{ product.name }} 
+                            <!-- (2) -->
+                        </div>
+                        <div>{{ product.price }}$</div>
                     </div>
                 </div>
 
                 <div class="korzina__details-total-cost">
                     <div>Итого:</div>
-                    <div>2487$</div>
+                    <div v-if="products != null"> {{ products.reduce((sum, item) => sum + item.price * item.amount, 0) }}$</div>
                 </div>
 
                 <ColouredButton>Перейти к оплате</ColouredButton>
@@ -60,13 +51,17 @@
 
         <div v-else class="empty">
             <p>Корзина пуста, предлагаем ознакомиться с нашим каталогом:</p>
-
             <!-- здесь добавить компонент с ссылками на разделы каталога -->
         </div>
     </div>
 </template>
 
 <script setup>
+let products = ref(JSON.parse(localStorage.getItem('korzina')));
+
+function deleteProduct(product) {
+    products.value.splice(products.value.findIndex(item => item.id === product.id), 1)
+}
 
 </script>
 
@@ -83,6 +78,10 @@
             padding-bottom: 20px;
             border-bottom: 1px solid $colorGrayLight;
             margin-bottom: 20px;
+
+            &:last-child {
+                border-bottom: none;
+            }
 
             img {
                 width: 120px;
@@ -107,6 +106,13 @@
                 &-body {
                     display: flex;
                     justify-content: space-between;
+
+                    &-author {
+                        color: $colorGray;
+                        font-size: 16px;
+                        font-weight: 500;
+                        padding: 0 0 15px;
+                    }
                 }
             }
         }

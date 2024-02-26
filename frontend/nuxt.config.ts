@@ -2,12 +2,26 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   // css: ['~/assets/main.scss'],
+  modules: [
+    // '@pinia/nuxt', 
+    '@vee-validate/nuxt', 
+    // '@nuxtjs/partytown'
+], // '@nuxt/devtools'
   css: [
     '@/assets/scss/reset.scss',
     // '@mdi/font/css/materialdesignicons.min.css',
     // 'vuetify/lib/styles/main.sass',
     '@/assets/scss/global.scss',
   ],
+  veeValidate: {
+      autoImports: true,
+      componentNames: {
+          Form: 'VeeForm',
+          Field: 'VeeField',
+          FieldArray: 'VeeFieldArray',
+          ErrorMessage: 'VeeErrorMessage',
+      },
+  },
   vite: {
       // plugins: [
       //     eslintPlugin(),

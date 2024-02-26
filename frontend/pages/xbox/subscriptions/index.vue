@@ -24,23 +24,6 @@
                 </div>
             </div>
 
-
-            <!-- <div v-if="allProducts && !searchingFilterOn" class="xbox-subscriptions__product-list">
-                <nuxt-link :to="`/xbox/subscriptions/${product.id}`" v-for="product in searchedProducts.data" :key="product.id" class="xbox-subscriptions__product-list-card">
-                    <ProductCard :product="product" />
-                </nuxt-link>
-            </div>
-
-            <div v-else-if="searchedProducts && searchingFilterOn" class="xbox-subscriptions__product-list">
-                <nuxt-link :to="`/xbox/subscriptions/${product.id}`" v-for="product in allProducts.data" :key="product.id" class="xbox-subscriptions__product-list-card">
-                    <ProductCard :product="product" />
-                </nuxt-link>
-            </div>
-
-            <div v-else>
-                no products
-            </div> -->
-
             <div v-if="allProducts && !searchingFilterOn" class="xbox-subscriptions__product-list">
                 <nuxt-link :to="`/xbox/subscriptions/${product.id}`" v-for="product in allProducts.data" :key="product.id" class="xbox-subscriptions__product-list-card">
                     <ProductCard :product="product" />
@@ -61,7 +44,7 @@
 </template>
 
 <script setup>
-import url from '@/url.js'
+const url = useDefineURL()
 
 const { data: allProducts } = await useFetch(`${url}/api/xbox/subscriptions`)
 
@@ -83,7 +66,6 @@ async function getSearchedProducts() {
     } else {
         searchedProducts.value = false;
     }
-    
 }
 
 </script>

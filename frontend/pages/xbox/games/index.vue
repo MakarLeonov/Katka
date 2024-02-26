@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <p class="title">Xbox</p>
+        <p class="title">Xbox Games</p>
 
         <div class="xbox-games">
             <div class="xbox-games__filters">
@@ -44,11 +44,9 @@
 </template>
 
 <script setup>
-// import url from '@/url.js'
+const url = useDefineURL()
 
-// const url = useDefineURL()
-
-const { data: allProducts } = await useFetch(`${useDefineURL()}/api/xbox/games`)
+const { data: allProducts } = await useFetch(`${url}/api/xbox/games`)
 
 const searchedProducts = ref({});
 const searchingValue = ref('');
@@ -68,7 +66,6 @@ async function getSearchedProducts() {
     } else {
         searchedProducts.value = false;
     }
-    
 }
 
 </script>

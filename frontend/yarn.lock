@@ -1286,12 +1286,12 @@
     hookable "^5.5.3"
     unhead "1.8.8"
 
-"@vee-validate/rules@^4.11.3":
-  version "4.12.3"
-  resolved "https://registry.npmjs.org/@vee-validate/rules/-/rules-4.12.3.tgz"
-  integrity sha512-kAcDlnUB3Fgg02oPNJmLkIK8fHmiU5bNZaYTX9agOKll6ricVGVrsaDT8rRP9Kna13jV3jAHs6yRtGcwgyPcyQ==
+"@vee-validate/rules@^4.12.5":
+  version "4.12.5"
+  resolved "https://registry.yarnpkg.com/@vee-validate/rules/-/rules-4.12.5.tgz#0c51154958f090806e30c0082ce68ee33331038e"
+  integrity sha512-4+dBvPOqMbr2b+wBYeDOfLg6eIEdU2iubhgcu71JZTljh1PDB3hI0s4Qsoo3k8hvUQsyDOaVDgorfXPWZlub1A==
   dependencies:
-    vee-validate "4.12.3"
+    vee-validate "4.12.5"
 
 "@vercel/nft@^0.24.3":
   version "0.24.4"
@@ -5214,7 +5214,15 @@ validate-npm-package-name@^5.0.0:
   dependencies:
     builtins "^5.0.0"
 
-vee-validate@4.12.3, vee-validate@^4.12.3:
+vee-validate@4.12.5:
+  version "4.12.5"
+  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-4.12.5.tgz#04e1cc3c23fba60ae7e49383cdd40d2ac60477ba"
+  integrity sha512-rvaDfLPSLwTk+mf016XWE4drB8yXzOsKXiKHTb9gNXNLTtQSZ0Ww26O0/xbIFQe+n3+u8Wv1Y8uO/aLDX4fxOg==
+  dependencies:
+    "@vue/devtools-api" "^6.5.1"
+    type-fest "^4.8.3"
+
+vee-validate@^4.12.3:
   version "4.12.3"
   resolved "https://registry.npmjs.org/vee-validate/-/vee-validate-4.12.3.tgz"
   integrity sha512-+ux21pFm2beGK21Q8LFDJdYqCu/7yd0HDIGolNvr7GjjlBTrK0JXm2y+h01jssyIlT1/+sSTNwAEqlSs0Nz0QA==

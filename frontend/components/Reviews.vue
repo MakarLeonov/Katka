@@ -58,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import url from '@/url.js'
+const url = useDefineURL()
 
 interface Reviews {
     data: {
@@ -149,7 +149,8 @@ watch(newPosition, () => {
 
 <style lang="scss">
 .reviews-slider {
-padding: 0 60px;
+    padding: 0 60px;
+
     h2 {
         font-size: 40px;
         text-align: center;
@@ -201,10 +202,12 @@ padding: 0 60px;
 
     &__slide {
         padding: 24px 24px 16px;
+        margin: 0 0 24px;
         font-size: 16px;
         // border: 1px solid color-lighten($colorGray, 70%);
         box-shadow: 0px 1px 15px 0px rgba(0, 0, 0, 0.15);
         border-radius: 24px;
+
 
         @include mq(1023) {
             box-shadow: none;

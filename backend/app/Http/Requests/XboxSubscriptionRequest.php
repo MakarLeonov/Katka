@@ -25,6 +25,7 @@ class XboxSubscriptionRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
+            'genre' => 'required|max:100',
             'image' => 'required|max:255',
             'price' => 'required|integer',
             'description' => 'required',

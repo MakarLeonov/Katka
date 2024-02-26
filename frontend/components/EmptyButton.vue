@@ -39,14 +39,8 @@
     &:hover {
         background: $colorBlack;
         color: #fff;
-
-        svg path {
-            fill: #fff;
-        }
-    }
-
-    & > div {
-        background: red;
+        fill: none;
+        stroke: #fff;
     }
 
     -ms-user-select: none; 

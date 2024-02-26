@@ -12,6 +12,7 @@
         </form>
 
         <nuxt-link to="/">Вернуться на главную</nuxt-link>
+        <div @click="$router.back()">Вернуться назад</div>
     </div>
 </template>
 
@@ -19,6 +20,8 @@
 definePageMeta({
   layout: false,
 })
+
+// const router = useRouter()
 </script>
 
 <style lang="scss" scoped>

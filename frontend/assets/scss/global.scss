@@ -1,17 +1,16 @@
-// @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@500&family=Rubik:wght@400;500;700&display=swap');
-@include fontface('Montserrat', Montserrat-Light, 300);
-@include fontface('Montserrat', Montserrat-LightItalic, 300, italic);
-@include fontface('Montserrat', Montserrat-Regular, 400);
-@include fontface('Montserrat', Montserrat-Italic, 400, italic);
-@include fontface('Montserrat', Montserrat-Bold, 700);
-@include fontface('Montserrat', Montserrat-BoldItalic, 700, italic);
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,300,0,0");
+
+@include fontface("Montserrat", Montserrat-Light, 300);
+@include fontface("Montserrat", Montserrat-LightItalic, 300, italic);
+@include fontface("Montserrat", Montserrat-Regular, 400);
+@include fontface("Montserrat", Montserrat-Italic, 400, italic);
+@include fontface("Montserrat", Montserrat-Bold, 700);
+@include fontface("Montserrat", Montserrat-BoldItalic, 700, italic);
 
 html {
     height: 100%;
     font-family: $Montserrat;
     font-size: 16px;
-    // line-height: 1.4;
-    // line-height: 1.2;
     line-height: 1;
     color: $colorBlack;
     background: #fff;
@@ -27,7 +26,8 @@ body {
 a {
     text-decoration: none;
     color: inherit;
-    transition: color 0.25s $easeInOutCirc, border 0.25s $easeInOutCirc, background 0.25s $easeInOutCirc, opacity 0.25s $easeInOutCirc;
+    transition: color 0.25s $easeInOutCirc, border 0.25s $easeInOutCirc,
+        background 0.25s $easeInOutCirc, opacity 0.25s $easeInOutCirc;
 }
 
 input,
@@ -59,8 +59,6 @@ textarea {
 
     &:hover,
     &:focus {
-        // border-color: $colorPrimaryDarken !important;
-
         &::placeholder {
             color: transparent;
         }
@@ -82,4 +80,135 @@ textarea {
     text-align: center;
     font-size: 55px;
     font-weight: 600;
+}
+
+// ТАБЛИЦЫ В АДМИН ПАНЕЛИ - вывести в миксин таблицу и
+.table {
+    margin-top: 10px;
+    width: 100%;
+    border-collapse: collapse;
+
+    line-height: 19px;
+    font-weight: 500;
+    color: $colorBlack;
+
+    border: 1px solid $colorBlack;
+    border-radius: 10px;
+
+    @include mq(999) {
+        padding: 10px;
+    }
+
+    & .thead {
+        padding: 3px 0;
+        border-radius: 8px 8px 0 0;
+        background: $colorBlack;
+        color: #fff;
+
+        @include mq(999) {
+            display: none;
+        }
+    }
+
+    & .tbody {
+        font-size: 17px;
+
+        @include mq(999) {
+            display: block;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        & .tr:nth-child(even) {
+            background-color: #f5f5f5;
+        }
+    }
+
+    & .tr {
+        display: grid;
+        // align-items: center;
+        grid-template-columns: 100px 3px 5fr 3px 1fr;
+
+        & > span {
+            padding: 11px 0;
+        }
+
+        @include mq(999) {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+
+            & > span {
+                display: none;
+            }
+        }
+    }
+
+    & .td,
+    & .th {
+        padding: 12px 15px;
+        text-align: left;
+    }
+
+    & .td {
+        @include mq(999) {
+            position: relative;
+            display: block;
+            width: 100%;
+
+            text-align: right;
+            padding-left: 50%;
+
+            &::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 50%;
+                padding-left: 15px;
+                text-align: left;
+            }
+        }
+
+        @include mq(500) {
+            padding-left: 50%;
+            word-break: break-all;
+        }
+    }
+
+    & .id {
+        text-align: center;
+
+        @include mq(999) {
+            text-align: right;
+        }
+    }
+
+    .options {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+
+        @include mq(999) {
+            justify-content: end;
+        }
+
+        span {
+            font-size: 28px;
+            cursor: pointer;
+
+            transition: color 0.15 $easeInOutCirc;
+
+            &.edit:hover {
+                color: rgb(9, 255, 9);
+            }
+
+            &.delete:hover {
+                color: red;
+            }
+        }
+    }
+
+    .center {
+        text-align: center;
+    }
 }
