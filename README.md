@@ -23,7 +23,29 @@ Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introdu
 
 
 
+
 # Backend
+
+## 1) Open the "backend" folder:
+
+```bash
+cd backend
+```
+
+## 2) Install the dependencies:
+
+```bash
+yarn install
+```
+
+## Start the development server on `http://localhost:8000`:
+
+```bash
+yarn dev
+```
+
+
+<!-- # Backend
 
 ## 1) Open the "backend" folder:
 
@@ -41,4 +63,4 @@ composer
 
 ```bash
 php artisan serve
-```
+``` -->
