@@ -1,0 +1,10 @@
+# ignore all .a files
+*.txt
+
+# ignore all files in any directory named build
+backend (Laravel)/
+backend/node_modules
+backend/node_modules
+
+# ignore doc/notes.txt, but not doc/server/arch.txt
+*.txt
