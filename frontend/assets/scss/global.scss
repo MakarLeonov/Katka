@@ -126,7 +126,6 @@ textarea {
 
     & .tr {
         display: grid;
-        // align-items: center;
         grid-template-columns: 100px 3px 5fr 3px 1fr;
 
         & > span {
@@ -210,5 +209,9 @@ textarea {
 
     .center {
         text-align: center;
+
+        @include mq(999) {
+            text-align: right;
+        }
     }
 }

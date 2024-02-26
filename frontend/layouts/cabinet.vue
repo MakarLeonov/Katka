@@ -20,7 +20,7 @@
                     <div class="dropdown__hover-space">
                         <p>PlayStation</p>
                     </div>
-                    <div class="dropdown__content">
+                    <div class="dropdown__content playstation">
                         <router-link to="/cabinet/playstation/games">PlayStation игры</router-link>
                         <!-- <router-link to="/cabinet/playstation/subscriptions">PlayStation подписки</router-link> -->
                     </div>
@@ -266,10 +266,10 @@ async function exit() {
         position: absolute;
         background: #fff;
         padding: 15px;
-        margin: 0 0 0 -20px;
+        margin: 0 0 0 -25px;
         border-radius: 5px;
-        min-width: 200px;
-        // box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+        min-width: 180px;
+        // box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.1);
         z-index: 1;
 
         a {
@@ -279,6 +279,10 @@ async function exit() {
             &:hover {
                 background: rgba(#6d6c6c, 0.07);
             }
+        }
+
+        &.playstation {
+            width: 230px;
         }
     }
 }
