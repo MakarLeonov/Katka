@@ -1,75 +1,44 @@
-# Nuxt 3 Minimal Starter
+# Frontend
+
+## 1) Open the "frontend" folder:
+
+```bash
+cd frontend
+```
+
+## 2) Install the dependencies:
+
+```bash
+yarn install
+```
+
+## Start the development server on `http://localhost:3000`:
+
+```bash
+yarn dev
+```
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
-## Setup
 
-Make sure to install the dependencies:
 
-```bash
-# npm
-npm install
 
-# pnpm
-pnpm install
+# Backend
 
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
+## 1) Open the "backend" folder:
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
+cd backend
 ```
 
-## Production
-
-Build the application for production:
+## 2) Install the dependencies:
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+composer
 ```
 
-Locally preview production build:
+## Start the development server on `http://localhost:8000`:
 
 ```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+php artisan serve
 ```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
