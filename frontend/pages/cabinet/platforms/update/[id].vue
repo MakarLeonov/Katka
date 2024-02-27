@@ -1,10 +1,10 @@
 <template>
     <div class="wrapper">
-        <p class="title">Добавление платформы</p>
+        <p class="title">Обновление платформы</p>
         <VeeForm v-slot="{ validate }" class="xbox-games-create">
             <div class="xbox-games-create__input">
                 <VeeField v-model.trim="name" name="name" placeholder="Название платформы *"
-                    :rules="{ required: true, max: 255 }" @keyup.enter.prevent="sendForm(validate)" />
+                    :rules="{ required: true, max: 255 }" @keyup.enter.prevent="updateFrom(validate)" />
                 <VeeErrorMessage name="name" class="errorMessage" />
 
                 <Transition>
@@ -14,7 +14,7 @@
                 </Transition>
             </div>
 
-            <ColouredButton @click.prevent="sendForm(validate)">Добавить запись</ColouredButton>
+            <ColouredButton @click.prevent="updateFrom(validate)">Обновить запись</ColouredButton>
         </VeeForm>
     </div>
 </template>
@@ -23,9 +23,15 @@
 import { defineRule, configure } from 'vee-validate';
 import type { FormContext } from 'vee-validate';
 import { required, max } from '@vee-validate/rules';
+
 const { $toast } = useNuxtApp();
 
 const confirmed = ref(false)
+
+const url = useDefineURL()
+const id = useRoute().params.id
+
+const { data: platform } = await useFetch<any>(`${url}/platforms/${id}`)
 
 definePageMeta({ layout: 'cabinet' })
 
@@ -50,30 +56,31 @@ configure({
     },
 });
 
-const name = ref('')
-
-const url = useDefineURL()
+const name = ref(platform.value.title)
 
 const isFormSended = ref(false);
 const isFormSuccess = ref(false);
 
-const sendForm = async (validate: FormContext['validate']) => {
+const router = useRouter()
+
+const updateFrom = async (validate: FormContext['validate']) => {
 
     const { valid } = await validate();
 
     if (valid) {
         isFormSended.value = true;
 
-        const todo = await $fetch(`${url}/platforms`, {
-            method: 'POST',
+        const todo = await $fetch(`${url}/platforms/${id}`, {
+            method: 'PUT',
             body: {
                 title: name.value
             }
         })
             .then(() => {
                 isFormSuccess.value = true;
-                $toast.success('Запись успешно добавлена');
-                name.value = ''
+                $toast.success('Запись успешно обновлена');
+                router.back()
+
             })
             .catch(() => {
                 isFormSended.value = false;

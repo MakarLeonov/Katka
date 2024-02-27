@@ -3,10 +3,9 @@
         <div class="title">Таблица "Платформы"</div>
 
         <div class="cabinet-platforms">
-
             <div class="cabinet-platforms__actions">
                 <div class="search-input">
-                    <input placeholder="Искать по имени...">
+                    <input v-model="searchValue" placeholder="Искать по имени...">
                     <ColouredButton class="search-input__button">
                         <span class="material-symbols-outlined">
                             search
@@ -28,12 +27,16 @@
                 </div>
 
                 <div class="tbody">
-                    <div v-for="(item, index) in 5" :key="index" class="tr">
-                        <div data-label="id" class="td id">123</div> <span>|</span>
-                        <div data-label="Платформа" class="td">PlayStation IV</div> <span>|</span>
+                    <div v-for="(platform, index) in filteredPlatforms" :key="index" class="tr">
+                        <div data-label="id" class="td id">{{ index + 1 }}</div> <span>|</span>
+                        <div data-label="Платформа" class="td">{{ platform.title }}</div> <span>|</span>
                         <div data-label="Опции" class="td options">
-                            <span class="material-symbols-outlined edit">edit</span>
-                            <span class="material-symbols-outlined delete">delete</span>
+                            <nuxt-link :to="`/cabinet/platforms/update/${platform.id}`">
+                                <span class="material-symbols-outlined edit">
+                                    edit
+                                </span>
+                            </nuxt-link>
+                            <span @click="deleteEntry(platform.id)" class="material-symbols-outlined delete">delete</span>
                         </div>
                     </div>
                 </div>
@@ -42,8 +45,37 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 definePageMeta({ layout: 'cabinet' })
+
+const url = useDefineURL()
+const { $toast } = useNuxtApp();
+
+interface Platform {
+    id: Number;
+    title: String;
+}
+
+// Может лучше сделать через запрос по нажатию на кнопку?
+const searchValue = ref('')
+
+const filteredPlatforms = computed(() => {
+    return platforms.value.filter((p: Platform) => p.title.toUpperCase().includes(searchValue.value.toUpperCase()))
+})
+
+const { data: platforms } = await useFetch<any>(`${url}/platforms`)
+
+async function deleteEntry(id: number): void {
+    const todo = await $fetch(`${url}/platforms/${id}`, { method: 'DELETE' })
+        .then(async () => {
+            const { data: data } = await useFetch<any>(`${url}/platforms`)
+            platforms.value = data.value
+            $toast.success('Запись успешно удалена');
+        })
+        .catch(() => {
+            $toast.error(`Не получилось удалить эту запись`);
+        });
+}
 </script>
 
 <style lang="scss" scoped>
