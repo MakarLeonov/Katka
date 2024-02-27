@@ -8,7 +8,7 @@
                 <VeeErrorMessage name="name" class="errorMessage" />
 
                 <Transition>
-                    <div v-show="name.length" @click="name = ''" class="xbox-games-create__input-clear">
+                    <div v-show="name?.length" @click="name = ''" class="xbox-games-create__input-clear">
                         <span class="material-symbols-outlined">close</span>
                     </div>
                 </Transition>
@@ -31,7 +31,7 @@ const confirmed = ref(false)
 const url = useDefineURL()
 const id = useRoute().params.id
 
-const { data: platform } = await useFetch<any>(`${url}/platforms/${id}`)
+const { data: platform } = await useFetch<Platform>(`${url}/platforms/${id}`)
 
 definePageMeta({ layout: 'cabinet' })
 
@@ -56,7 +56,7 @@ configure({
     },
 });
 
-const name = ref(platform.value.title)
+const name = ref(platform.value ? platform.value.title : null)
 
 const isFormSended = ref(false);
 const isFormSuccess = ref(false);

@@ -129,7 +129,7 @@ textarea {
         grid-template-columns: 100px 3px 5fr 3px 1fr;
 
         & > span {
-            padding: 11px 0;
+            padding: 17px 0;
         }
 
         @include mq(999) {
@@ -145,7 +145,7 @@ textarea {
 
     & .td,
     & .th {
-        padding: 12px 15px;
+        padding: 17px 15px;
         text-align: left;
     }
 
@@ -186,6 +186,7 @@ textarea {
         display: flex;
         justify-content: center;
         gap: 30px;
+        padding: 10px 15px;
 
         @include mq(999) {
             justify-content: end;
@@ -213,5 +214,11 @@ textarea {
         @include mq(999) {
             text-align: right;
         }
+    }
+
+    &.empty {
+        padding: 30px;
+        text-align: center;
+        font-size: 19px;
     }
 }

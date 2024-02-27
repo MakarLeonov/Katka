@@ -8,7 +8,8 @@ router.route("/")
 
 router.route("/:id")
     .get(reviewsController.getById)
-    .put(reviewsController.update)
+    // .put(reviewsController.update)
+    .put(reviewsController.changePublishStatus)
     .delete(reviewsController.delete);
 
 module.exports = router;

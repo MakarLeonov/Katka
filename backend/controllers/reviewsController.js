@@ -40,10 +40,31 @@ exports.createNew = async (req, res, next) => {
 exports.update = async (req, res, next) => {
     try {
         let id = req.params.id;
-        let { author, rating, male, comment } = req.body;
+        let { author, rating, male, comment, isPublished } = req.body;
 
         let entry = new Review();
-        entry = await entry.update(id, author, rating, male, comment);
+        entry = await entry.update(id, author, rating, male, comment, isPublished);
+
+        let [updatedEntry, _] = await Review.findById(id);
+
+        res.json({ 
+            status: 204, 
+            message: "Запись успешно обновлена", 
+            updatedEntry: updatedEntry[0]
+        });
+    } catch(error) {
+        console.log(error);
+        next(error)
+    }
+}
+
+exports.changePublishStatus = async (req, res, next) => {
+    try {
+        let id = req.params.id;
+        let { isPublished } = req.body;
+
+        let entry = new Review();
+        entry = await entry.changePublishStatus(id, isPublished);
 
         let [updatedEntry, _] = await Review.findById(id);
 

@@ -17,7 +17,7 @@
                 </nuxt-link>
             </div>
 
-            <div class="table">
+            <div v-if="filteredPlatforms?.length" class="table">
                 <div class="thead">
                     <div class="tr">
                         <div class="th id">№</div> <span>|</span>
@@ -41,6 +41,11 @@
                     </div>
                 </div>
             </div>
+
+            <div v-else class="table empty">
+                Ни одной записи не найдено, попробуйте сбросить фильтры или добавить новую
+                <span></span>
+            </div>
         </div>
     </div>
 </template>
@@ -48,27 +53,27 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'cabinet' })
 
-const url = useDefineURL()
 const { $toast } = useNuxtApp();
 
-interface Platform {
-    id: Number;
-    title: String;
-}
+const url = useDefineURL()
 
 // Может лучше сделать через запрос по нажатию на кнопку?
 const searchValue = ref('')
 
 const filteredPlatforms = computed(() => {
-    return platforms.value.filter((p: Platform) => p.title.toUpperCase().includes(searchValue.value.toUpperCase()))
+    if (platforms.value) {
+        return platforms.value.filter((p: Platform) => p.title.toUpperCase().includes(searchValue.value.toUpperCase()))
+    } else {
+        return []
+    }
 })
 
-const { data: platforms } = await useFetch<any>(`${url}/platforms`)
+const { data: platforms } = await useFetch<Platform[]>(`${url}/platforms`)
 
-async function deleteEntry(id: number): void {
-    const todo = await $fetch(`${url}/platforms/${id}`, { method: 'DELETE' })
+async function deleteEntry(id: number): Promise<void> {
+    await $fetch(`${url}/platforms/${id}`, { method: 'DELETE' })
         .then(async () => {
-            const { data: data } = await useFetch<any>(`${url}/platforms`)
+            const { data: data } = await useFetch<Platform[]>(`${url}/platforms`)
             platforms.value = data.value
             $toast.success('Запись успешно удалена');
         })
