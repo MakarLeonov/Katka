@@ -26,8 +26,6 @@ import { required, max } from '@vee-validate/rules';
 
 const { $toast } = useNuxtApp();
 
-const confirmed = ref(false)
-
 const url = useDefineURL()
 const id = useRoute().params.id
 
@@ -70,7 +68,7 @@ const updateFrom = async (validate: FormContext['validate']) => {
     if (valid) {
         isFormSended.value = true;
 
-        const todo = await $fetch(`${url}/platforms/${id}`, {
+        await $fetch(`${url}/platforms/${id}`, {
             method: 'PUT',
             body: {
                 title: name.value

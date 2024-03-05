@@ -24,8 +24,7 @@ import { defineRule, configure } from 'vee-validate';
 import type { FormContext } from 'vee-validate';
 import { required, max } from '@vee-validate/rules';
 const { $toast } = useNuxtApp();
-
-const confirmed = ref(false)
+const router = useRouter();
 
 definePageMeta({ layout: 'cabinet' })
 
@@ -73,7 +72,7 @@ const sendForm = async (validate: FormContext['validate']) => {
             .then(() => {
                 isFormSuccess.value = true;
                 $toast.success('Запись успешно добавлена');
-                name.value = ''
+                router.back()
             })
             .catch(() => {
                 isFormSended.value = false;

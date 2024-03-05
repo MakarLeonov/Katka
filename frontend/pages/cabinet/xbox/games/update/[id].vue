@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <p class="title">Добавление записи</p>
+        <p class="title">Обновление записи</p>
 
         <VeeForm v-slot="{ validate }" class="xbox-games-create">
             <div class="xbox-games-create__input">
@@ -48,35 +48,24 @@
 
             <div class="xbox-games-create__grid">
                 <div class="xbox-games-create__input">
-                    <VeeField v-model.trim="fields.genre" name="genre" placeholder="Жанр *"
-                        :rules="{ required: true, max: 100 }" />
-                    <VeeErrorMessage name="genre" class="errorMessage" />
+                    <VeeField v-model.trim="fields.price" name="price" placeholder="Цена *"
+                        :rules="{ required: true, max: 10 }" />
+                    <VeeErrorMessage name="price" class="errorMessage" />
 
                     <Transition>
-                        <div v-show="fields.genre.length" @click="fields.genre = ''" class="xbox-games-create__input-clear">
+                        <div v-show="fields.price.length" @click="fields.price = ''" class="xbox-games-create__input-clear">
                             <span class="material-symbols-outlined">close</span>
                         </div>
                     </Transition>
                 </div>
 
                 <div class="xbox-games-create__input">
-                    <VeeField v-model.number="fields.price" name="price" placeholder="Цена *"
-                        :rules="{ required: true, max: 10 }" />
-
-                    <div class="dropdown">
-                        <div class="dropdown__hover-space">
-                            <p>{{ fields.currency }}</p>
-                        </div>
-                        <div class="dropdown__content">
-                            <p @click="fields.currency = '₽'">₽</p>
-                            <p @click="fields.currency = '$'">$</p>
-                        </div>
-                    </div>
-
-                    <VeeErrorMessage name="price" class="errorMessage" />
+                    <VeeField v-model.trim="fields.genre" name="genre" placeholder="Жанр *"
+                        :rules="{ required: true, max: 100 }" />
+                    <VeeErrorMessage name="genre" class="errorMessage" />
 
                     <Transition>
-                        <div v-show="fields.price" @click="fields.price = 0" class="xbox-games-create__input-clear">
+                        <div v-show="fields.genre.length" @click="fields.genre = ''" class="xbox-games-create__input-clear">
                             <span class="material-symbols-outlined">close</span>
                         </div>
                     </Transition>
@@ -134,10 +123,14 @@
 import { defineRule, configure } from 'vee-validate';
 import type { FormContext } from 'vee-validate';
 import { required, max } from '@vee-validate/rules';
+
 const { $toast } = useNuxtApp();
 const router = useRouter()
 
 const url = useDefineURL()
+const id = useRoute().params.id
+
+const { data: game } = await useFetch<Game>(`${url}/xbox/games/${id}`)
 
 const { data: platforms } = await useFetch<Platform[]>(`${url}/platforms`)
 
@@ -145,9 +138,6 @@ definePageMeta({ layout: 'cabinet' })
 
 defineRule('required', required);
 defineRule('max', max);
-// defineRule('min', min);
-// defineRule('email', email);
-// defineRule('regex', regex);
 
 configure({
     generateMessage: ctx => {
@@ -168,15 +158,14 @@ configure({
 });
 
 const fields = ref({
-    name: '',
-    author: '',
-    price: '',
-    currency: '₽',
-    genre: '',
-    memory: '',
-    image: '',
-    platforms: [],
-    description: '',
+    name: game.value ? game.value.name : '',
+    author: game.value ? game.value.author : '',
+    price: game.value ? game.value.price : '',
+    genre: game.value ? game.value.genre : '',
+    memory: game.value ? game.value.memory : '',
+    image: game.value ? game.value.image : '',
+    platforms: game.value ? game.value.platforms : [],
+    description: game.value ? game.value.description : '',
 })
 
 const isFormSended = ref(false);
@@ -189,19 +178,16 @@ const sendForm = async (validate: FormContext['validate']) => {
     if (valid) {
         isFormSended.value = true;
 
-        console.log(fields.value)
-
-        await $fetch(`${url}/xbox/games`, {
-            method: 'POST',
+        await $fetch(`${url}/xbox/games/${id}`, {
+            method: 'PUT',
             body: fields.value
         })
             .then(() => {
                 isFormSuccess.value = true;
-                $toast.success('Запись успешно добавлена');
+                $toast.success('Запись успешно Обновлена');
                 router.back()
             })
-            .catch((e) => {
-                console.log(e)
+            .catch(() => {
                 isFormSended.value = false;
                 $toast.error('Введенные данные содержат ошибки');
             });
@@ -210,7 +196,7 @@ const sendForm = async (validate: FormContext['validate']) => {
     }
 };
 
-const isAnyDataInFrom = ref(false)
+const isAnyDataInFrom = ref(true)
 
 watch(
     () => fields, (newValue: any, oldValue) => {
@@ -406,58 +392,6 @@ function clearFrom() {
             &>span {
                 color: $colorGray;
             }
-        }
-    }
-}
-
-.dropdown {
-    position: absolute;
-    cursor: pointer;
-    top: 16px;
-    right: -35px;
-
-    &:hover {
-        .dropdown__content {
-            display: block;
-        }
-    }
-
-    &__hover-space {
-        color: #000;
-        height: 50px;
-        width: 35px;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 20px;
-    }
-
-    &__content {
-        display: none;
-        position: absolute;
-        background: #fff;
-        padding: 15px;
-        border-radius: 5px;
-        width: 100px;
-        margin: 0 0 0 10px;
-        ;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-
-        p {
-            text-align: center;
-            display: block;
-            padding: 10px 10px 7px;
-            color: #000;
-
-            &:hover {
-                background: rgba(#000, 0.07);
-            }
-        }
-
-        &.playstation {
-            width: 230px;
         }
     }
 }

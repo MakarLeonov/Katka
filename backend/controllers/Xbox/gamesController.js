@@ -4,6 +4,11 @@ exports.getAll = async (req, res, next) => {
     try {
         const [entries, _] = await Game.findAll();
 
+        entries.map(e => {
+            e.platforms = e.platforms.split(',')
+            return e
+        })
+
         res.status(200).json(entries);
     } catch(error) {
         console.log(error);
@@ -15,6 +20,10 @@ exports.getById = async (req, res, next) => {
     try {
         let id = req.params.id;
         let [entry, _] = await Game.findById(id);
+
+        entry[0].platforms = entry[0].platforms.split(',') 
+
+        console.log(entry[0])
 
         res.status(200).json(entry[0]);
     } catch(error) {
@@ -37,8 +46,8 @@ exports.getByName = async (req, res, next) => {
 
 exports.createNew = async (req, res, next) => {
     try {
-        let { name, author, genre, image, price, memory, description, platform_id } = req.body;
-        let entry = new Game(name, author, genre, image, price, memory, description, platform_id);
+        let { name, author, genre, image, price, currency, memory, description, platforms } = req.body;
+        let entry = new Game(name, author, genre, image, price, currency, memory, description, platforms);
 
         entry = await entry.save();
         
@@ -52,10 +61,10 @@ exports.createNew = async (req, res, next) => {
 exports.update = async (req, res, next) => {
     try {
         let id = req.params.id;
-        let { name, author, genre, image, price, memory, description, platform_id } = req.body;
+        let { name, author, genre, image, price, currency, memory, description, platforms } = req.body;
 
         let entry = new Game();
-        entry = await entry.update(id, name, author, genre, image, price, memory, description, platform_id);
+        entry = await entry.update(id, name, author, genre, image, price, currency, memory, description, platforms);
 
         let [updatedEntry, _] = await Game.findById(id);
 

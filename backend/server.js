@@ -18,13 +18,15 @@ app.use("/xbox/games", require("./routes/Xbox/gamesRoutes"));
 app.use("/xbox/subscriptions", require("./routes/Xbox/subscriptionsRoutes"));
 
 app.use((err, req, res, next) => {
-  console.log(err.stack);
-  console.log(err.name);
-  console.log(err.code);
+  console.log('stak: ', err.stack);
+  console.log('name: ', err.name);
+  console.log('code: ', err.code);
 
-  res.status(500).json({
-    message: "Что-то пошло не так",
-  });
+  // res.status(500).json({
+  //   message: "Что-то пошло не так",
+  // });
+
+  res.status(500).send(err)
 });
 
 const PORT = process.env.PORT || 8000;

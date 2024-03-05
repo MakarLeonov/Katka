@@ -1,26 +1,27 @@
 const db = require('../../config/db');
-const tableName = 'xbox_gamess'
+const tableName = 'xbox_games'
 
-class Review {
-    constructor(name, author, genre, image, price, memory, description, platform_id) {
+class Game {
+    constructor(name, author, genre, image, price, currency, memory, description, platforms) {
         this.name = name;
         this.author = author;
         this.genre = genre;
         this.image = image;
         this.price = price;
+        this.currency = currency;
         this.memory = memory;
         this.description = description;
-        this.platform_id = platform_id;
+        this.platforms = platforms;
     }
 
     save() {
-        let sql = `INSERT INTO ${tableName}(name, author, genre, image, price, memory, description, platform_id) 
-        VALUES ('${this.name}', '${this.author}', '${this.genre}', '${this.image}', ${this.price}, '${this.memory}', '${this.description}', ${this.platform_id})`;
+        let sql = `INSERT INTO ${tableName}(name, author, genre, image, price, currency, memory, description, platforms) 
+        VALUES ('${this.name}', '${this.author}', '${this.genre}', '${this.image}', ${this.price}, '${this.currency}', '${this.memory}', '${this.description}', '${this.platforms}');`;
 
         return db.execute(sql);
     }
 
-    update(id, name, author, genre, image, price, memory, description, platform_id) {
+    update(id, name, author, genre, image, price, currency, memory, description, platforms) {
         let sql = `
             UPDATE ${tableName} 
             SET name="${name}", 
@@ -28,47 +29,23 @@ class Review {
                 genre="${genre}",
                 image="${image}", 
                 price=${price}, 
+                currency="${currency}", 
                 memory="${memory}", 
                 description="${description}",
-                platform_id=${platform_id} 
+                platforms="${platforms}" 
             WHERE id = ${id};`
 
         return db.execute(sql);
     }
 
     static findAll() {
-        // let sql = `SELECT * FROM ${tableName};`;
-        let sql = `
-            SELECT ${tableName}.id, 
-                   ${tableName}.name, 
-                   ${tableName}.author, 
-                   ${tableName}.image, 
-                   ${tableName}.price, 
-                   ${tableName}.memory, 
-                   ${tableName}.description, 
-                platforms.title AS platforms 
-            FROM ${tableName} 
-            INNER JOIN platforms 
-            ON ${tableName}.platform_id = platforms.id;`;
+        let sql = `SELECT * FROM ${tableName};`
 
         return db.execute(sql);
     }
 
     static findById(id) {
-        // let sql = `SELECT * FROM ${tableName} WHERE id = ${id};`;
-        let sql = `
-            SELECT ${tableName}.id, 
-                   ${tableName}.name, 
-                   ${tableName}.author, 
-                   ${tableName}.image, 
-                   ${tableName}.price, 
-                   ${tableName}.memory, 
-                   ${tableName}.description, 
-                platforms.title AS platforms 
-            FROM ${tableName} 
-            INNER JOIN platforms 
-            ON ${tableName}.platform_id = platforms.id
-            WHERE ${tableName}.id = ${id};`;
+        let sql = `SELECT * FROM ${tableName} WHERE id = ${id};`;
 
         return db.execute(sql);
     }
@@ -86,4 +63,4 @@ class Review {
     }
 }
 
-module.exports = Review;
+module.exports = Game;

@@ -4,10 +4,24 @@ interface Platform {
 }
 
 interface Review {
-    id: numver;
+    id: number;
     author: string;
-    rating: numver;
+    rating: number;
     male: string;
     comment: string;
-    isPublished: numver;
+    isPublished: number;
+}
+
+interface Game {
+    id: number;
+    name: string;
+    author: string;
+    genre: string;
+    image: string;
+    price: number;
+    currency: "USD" | "RUB";
+    // currency: "$" | "";
+    memory: string;
+    description: string;
+    platforms: string[];
 }
